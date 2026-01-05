@@ -48,15 +48,15 @@
   }
 
   .input-field {
-    @apply w-full bg-surface border border-border-brand px-4 py-3 text-sm text-foreground outline-none focus:border-primary/40 transition-all;
+    @apply h-14 w-full bg-surface border border-border-brand px-6 text-[11px] font-black tracking-widest outline-none focus:border-foreground/30 transition-all placeholder:text-text-secondary/30;
   }
 
   .btn-primary {
-    @apply flex items-center justify-center bg-foreground text-background px-8 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:opacity-90 active:scale-95 disabled:opacity-50;
+    @apply h-14 px-10 bg-foreground text-background text-[10px] font-black uppercase tracking-[0.3em] flex items-center justify-center transition-all hover:opacity-90 active:scale-95 disabled:opacity-50;
   }
 
   .btn-outline {
-    @apply flex items-center justify-center border border-border-brand bg-transparent text-foreground px-8 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:bg-foreground/5 active:scale-95;
+    @apply h-14 px-10 border border-border-brand bg-transparent text-foreground text-[10px] font-black uppercase tracking-[0.3em] flex items-center justify-center transition-all hover:bg-foreground/5 active:scale-95 disabled:opacity-50;
   }
 }
 

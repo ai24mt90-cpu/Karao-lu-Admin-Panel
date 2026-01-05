@@ -8,42 +8,105 @@ import {
     Eye,
     Globe,
     Trophy,
-    School
+    School,
+    Loader2
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { useState, useEffect } from "react";
+import { supabase } from "@/lib/supabase";
+import SocialModal from "@/components/SocialModal";
 
-const programs = [
-    {
-        id: 1,
-        title: "Anadolu Lisesi Bağışı",
-        category: "Eğitim",
-        location: "Sivas",
-        date: "2022",
-        icon: <School size={16} />,
-        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDbcyhifZbpSgvyiXW09ZLaG6ZTAfuwGut1eaAfWhMtwXsI2AkjddTNbSRCxvQ9GaC1ywJJLuv5mwBvjg-OdEu7q3Pn8Ssox_vRbe4kiKFVyhJj96RS_Kv9ab3CiWLum_1ur5cg8UNkA2Ka0luYWkS5f7BoDPwN-GPoGBTDR5I2nA91WObLOK7QlA8bWmk4BkO4TxoNdA4hbN6hHnm3GVCMhUCqt9UfsXR60-s8U1WzoaTU6DywtagjJYmeutuJtBxwf1y1GS4OKB2Y"
-    },
-    {
-        id: 2,
-        title: "Vanspor Kulüp Bağışı",
-        category: "Spor",
-        location: "Van",
-        date: "Devam Ediyor",
-        icon: <Trophy size={16} />,
-        image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=400"
-    },
-    {
-        id: 3,
-        title: "Toplumsal Dayanışma Projesi",
-        category: "Toplumsal Katkı",
-        location: "Türkiye Geneli",
-        date: "2023",
-        icon: <Globe size={16} />,
-        image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=400"
-    }
-];
+interface SocialProgram {
+    id?: string;
+    title: string;
+    category: string;
+    location?: string;
+    date?: string;
+    image_url?: string;
+    description?: string;
+    icon_type?: string;
+}
 
 export default function SocialResponsibilityAdminPage() {
+    const [programs, setPrograms] = useState<SocialProgram[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [activeCategory, setActiveCategory] = useState("TÜMÜ");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingProgram, setEditingProgram] = useState<SocialProgram | null>(null);
+
+    useEffect(() => {
+        fetchPrograms();
+    }, []);
+
+    const fetchPrograms = async () => {
+        setLoading(true);
+        const { data, error } = await supabase
+            .from("social_responsibility")
+            .select("*")
+            .order("created_at", { ascending: false });
+
+        if (error) {
+            console.error("Error fetching social programs:", error);
+        } else {
+            setPrograms(data || []);
+        }
+        setLoading(false);
+    };
+
+    const handleSave = async (programData: SocialProgram) => {
+        const { id, ...data } = programData;
+
+        let error;
+        if (id) {
+            const { error: updateError } = await supabase
+                .from("social_responsibility")
+                .update(data)
+                .eq("id", id);
+            error = updateError;
+        } else {
+            const { error: insertError } = await supabase
+                .from("social_responsibility")
+                .insert([data]);
+            error = insertError;
+        }
+
+        if (error) {
+            alert("Hata oluştu: " + error.message);
+            throw error;
+        } else {
+            fetchPrograms();
+        }
+    };
+
+    const handleDelete = async (id: string) => {
+        if (!confirm("Bu programı silmek istediğinize emin misiniz?")) return;
+
+        const { error } = await supabase
+            .from("social_responsibility")
+            .delete()
+            .eq("id", id);
+
+        if (error) {
+            alert("Silme hatası: " + error.message);
+        } else {
+            setPrograms(programs.filter(p => p.id !== id));
+        }
+    };
+
+    const filteredPrograms = programs.filter(p =>
+        activeCategory === "TÜMÜ" || p.category.toUpperCase() === activeCategory
+    );
+
+    const getIcon = (type?: string) => {
+        switch (type) {
+            case 'school': return <School size={16} />;
+            case 'trophy': return <Trophy size={16} />;
+            case 'globe': return <Globe size={16} />;
+            default: return <Globe size={16} />;
+        }
+    };
+
     return (
         <DashboardLayout title="Sosyal Sorumluluk Yönetimi">
             <div className="flex flex-col gap-10">
@@ -55,61 +118,104 @@ export default function SocialResponsibilityAdminPage() {
                         <p className="text-sm font-black uppercase tracking-tighter text-foreground">Program ve Bağış Listesi</p>
                     </div>
 
-                    <button className="btn-primary h-16 px-10 bg-foreground text-background text-[10px] font-black uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:opacity-90">
-                        <Plus size={16} /> Yeni Program Ekle
+                    <button
+                        onClick={() => {
+                            setEditingProgram(null);
+                            setIsModalOpen(true);
+                        }}
+                        className="btn-primary h-16 shrink-0"
+                    >
+                        <Plus size={16} className="mr-3" /> Yeni Program Ekle
                     </button>
                 </div>
 
                 {/* Categories Quick Filter */}
                 <div className="flex gap-4 overflow-x-auto pb-4">
-                    {["TÜMÜ", "EĞİTİM", "SPOR", "TOPLUMSAL KATKI"].map((cat, idx) => (
-                        <button key={cat} className={`h-12 px-8 text-[9px] font-black uppercase tracking-[0.2em] border ${idx === 0 ? "bg-foreground text-background border-foreground" : "border-border-brand text-text-secondary hover:text-foreground"}`}>
+                    {["TÜMÜ", "EĞİTİM", "SPOR", "TOPLUMSAL KATKI"].map((cat) => (
+                        <button
+                            key={cat}
+                            onClick={() => setActiveCategory(cat)}
+                            className={`h-12 px-8 text-[9px] font-black uppercase tracking-[0.2em] border transition-all ${activeCategory === cat ? "bg-foreground text-background border-foreground" : "border-border-brand text-text-secondary hover:text-foreground"}`}
+                        >
                             {cat}
                         </button>
                     ))}
                 </div>
 
                 {/* List View */}
-                <div className="flex flex-col gap-4">
-                    {programs.map((program, idx) => (
-                        <motion.div
-                            key={program.id}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: idx * 0.05 }}
-                            className="p-8 border border-border-brand bg-surface hover:bg-foreground/[0.02] hover:border-foreground/10 transition-all flex flex-col md:flex-row items-center gap-10 group"
-                        >
-                            <div className="relative size-24 shrink-0 grayscale group-hover:grayscale-0 transition-all duration-700 overflow-hidden">
-                                <Image src={program.image} alt={program.title} fill className="object-cover" />
-                            </div>
+                <div className="flex flex-col gap-4 min-h-[400px]">
+                    {loading ? (
+                        <div className="flex-1 flex flex-col items-center justify-center gap-4 text-text-secondary py-20">
+                            <Loader2 className="animate-spin" size={32} />
+                            <p className="text-[10px] font-black uppercase tracking-[0.5em]">Programlar Yükleniyor...</p>
+                        </div>
+                    ) : filteredPrograms.length === 0 ? (
+                        <div className="flex-1 flex flex-col items-center justify-center gap-4 text-text-secondary py-20 border border-dashed border-border-brand">
+                            <p className="text-[10px] font-black uppercase tracking-[0.5em]">Program Bulunamadı</p>
+                        </div>
+                    ) : (
+                        <AnimatePresence mode="popLayout">
+                            {filteredPrograms.map((program, idx) => (
+                                <motion.div
+                                    key={program.id}
+                                    layout
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    className="p-8 border border-border-brand bg-surface hover:bg-foreground/[0.02] hover:border-foreground/10 transition-all flex flex-col md:flex-row items-center gap-10 group"
+                                >
+                                    <div className="relative size-24 shrink-0 grayscale group-hover:grayscale-0 transition-all duration-700 overflow-hidden bg-foreground/5">
+                                        {program.image_url ? (
+                                            <Image src={program.image_url} alt={program.title} fill className="object-cover" />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center text-[8px] font-black opacity-10">NO IMG</div>
+                                        )}
+                                    </div>
 
-                            <div className="flex-1 flex flex-col gap-2">
-                                <div className="flex items-center gap-3 text-text-secondary italic text-[10px] font-black uppercase tracking-widest opacity-40">
-                                    {program.icon} {program.category}
-                                </div>
-                                <h4 className="text-xl font-black uppercase tracking-tighter">{program.title}</h4>
-                                <div className="flex gap-6 mt-2">
-                                    <div className="text-[9px] font-black uppercase tracking-[0.4em] text-text-secondary">Konum: <span className="text-foreground">{program.location}</span></div>
-                                    <div className="text-[9px] font-black uppercase tracking-[0.4em] text-text-secondary">Tarih: <span className="text-foreground">{program.date}</span></div>
-                                </div>
-                            </div>
+                                    <div className="flex-1 flex flex-col gap-2">
+                                        <div className="flex items-center gap-3 text-text-secondary italic text-[10px] font-black uppercase tracking-widest opacity-40">
+                                            {getIcon(program.icon_type)} {program.category}
+                                        </div>
+                                        <h4 className="text-xl font-black uppercase tracking-tighter">{program.title}</h4>
+                                        <div className="flex gap-6 mt-2">
+                                            <div className="text-[9px] font-black uppercase tracking-[0.4em] text-text-secondary">Konum: <span className="text-foreground">{program.location || 'BELİRTİLMEMİŞ'}</span></div>
+                                            <div className="text-[9px] font-black uppercase tracking-[0.4em] text-text-secondary">Tarih: <span className="text-foreground">{program.date || 'BELİRTİLMEMİŞ'}</span></div>
+                                        </div>
+                                    </div>
 
-                            <div className="flex items-center gap-3">
-                                <button title="Görüntüle" className="size-12 flex items-center justify-center border border-border-brand text-text-secondary hover:text-foreground hover:border-foreground/20 transition-all">
-                                    <Eye size={16} />
-                                </button>
-                                <button title="Düzenle" className="size-12 flex items-center justify-center border border-border-brand text-text-secondary hover:text-foreground hover:border-foreground/20 transition-all">
-                                    <Edit2 size={16} />
-                                </button>
-                                <button title="Sil" className="size-12 flex items-center justify-center border border-border-brand text-text-secondary/50 hover:text-red-500 hover:border-red-500/20 transition-all">
-                                    <Trash2 size={16} />
-                                </button>
-                            </div>
-                        </motion.div>
-                    ))}
+                                    <div className="flex items-center gap-3">
+                                        <button
+                                            onClick={() => {
+                                                setEditingProgram(program);
+                                                setIsModalOpen(true);
+                                            }}
+                                            title="Düzenle"
+                                            className="size-12 flex items-center justify-center border border-border-brand text-text-secondary hover:text-foreground hover:border-foreground/20 transition-all"
+                                        >
+                                            <Edit2 size={16} />
+                                        </button>
+                                        <button
+                                            onClick={() => program.id && handleDelete(program.id)}
+                                            title="Sil"
+                                            className="size-12 flex items-center justify-center border border-border-brand text-text-secondary/50 hover:text-red-500 hover:border-red-500/20 transition-all"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                    )}
                 </div>
 
             </div>
+
+            <SocialModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSave={handleSave}
+                editingProgram={editingProgram}
+            />
         </DashboardLayout>
     );
 }
