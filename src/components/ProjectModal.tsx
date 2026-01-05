@@ -1,8 +1,9 @@
 "use client";
 
-import { X, Save, Upload, Loader2 } from "lucide-react";
+import { X, Save, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ImageUpload from "./ImageUpload";
 
 interface Project {
     id?: string;
@@ -73,7 +74,7 @@ export default function ProjectModal({ isOpen, onClose, onSave, editingProject }
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+                        className="absolute inset-0 bg-slate-900/10 backdrop-blur-sm"
                     />
 
                     <motion.div
@@ -84,14 +85,14 @@ export default function ProjectModal({ isOpen, onClose, onSave, editingProject }
                     >
                         <div className="flex justify-between items-start mb-10">
                             <div className="flex flex-col gap-2">
-                                <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-text-secondary">
+                                <h3 className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">
                                     {editingProject ? "Projeyi Düzenle" : "Yeni Proje Ekle"}
                                 </h3>
-                                <p className="text-xl font-black uppercase tracking-tighter">Proje Detayları</p>
+                                <p className="text-xl font-bold text-slate-700 tracking-tight">Proje Detayları</p>
                             </div>
                             <button
                                 onClick={onClose}
-                                className="size-10 flex items-center justify-center border border-border-brand hover:border-foreground/20 transition-all"
+                                className="size-10 flex items-center justify-center border border-border-brand hover:bg-slate-50 transition-all rounded-lg text-slate-400 hover:text-slate-600"
                             >
                                 <X size={20} />
                             </button>
@@ -101,7 +102,7 @@ export default function ProjectModal({ isOpen, onClose, onSave, editingProject }
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 {/* Title */}
                                 <div className="flex flex-col gap-3 md:col-span-2">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Proje Başlığı</label>
+                                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Proje Başlığı</label>
                                     <input
                                         required
                                         type="text"
@@ -114,7 +115,7 @@ export default function ProjectModal({ isOpen, onClose, onSave, editingProject }
 
                                 {/* Category */}
                                 <div className="flex flex-col gap-3">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Kategori</label>
+                                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Kategori</label>
                                     <select
                                         value={formData.category}
                                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
@@ -126,7 +127,7 @@ export default function ProjectModal({ isOpen, onClose, onSave, editingProject }
 
                                 {/* Status */}
                                 <div className="flex flex-col gap-3">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Durum</label>
+                                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Durum</label>
                                     <select
                                         value={formData.status}
                                         onChange={(e) => setFormData({ ...formData, status: e.target.value })}
@@ -138,7 +139,7 @@ export default function ProjectModal({ isOpen, onClose, onSave, editingProject }
 
                                 {/* Location */}
                                 <div className="flex flex-col gap-3">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Konum</label>
+                                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Konum</label>
                                     <input
                                         required
                                         type="text"
@@ -151,7 +152,7 @@ export default function ProjectModal({ isOpen, onClose, onSave, editingProject }
 
                                 {/* Year */}
                                 <div className="flex flex-col gap-3">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Yıl</label>
+                                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Yıl</label>
                                     <input
                                         required
                                         type="text"
@@ -165,7 +166,7 @@ export default function ProjectModal({ isOpen, onClose, onSave, editingProject }
 
                             {/* Description */}
                             <div className="flex flex-col gap-3">
-                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Açıklama</label>
+                                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Açıklama</label>
                                 <textarea
                                     rows={4}
                                     value={formData.description}
@@ -175,22 +176,12 @@ export default function ProjectModal({ isOpen, onClose, onSave, editingProject }
                                 />
                             </div>
 
-                            {/* Image URL (Temporary until full storage setup) */}
-                            <div className="flex flex-col gap-3">
-                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Görsel URL</label>
-                                <div className="flex gap-4">
-                                    <input
-                                        type="text"
-                                        value={formData.image_url}
-                                        onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                                        className="input-field flex-1"
-                                        placeholder="https://..."
-                                    />
-                                    <button type="button" className="size-14 shrink-0 flex items-center justify-center border border-border-brand hover:bg-foreground/5 text-text-secondary transition-all">
-                                        <Upload size={18} />
-                                    </button>
-                                </div>
-                            </div>
+                            {/* Image Upload */}
+                            <ImageUpload
+                                value={formData.image_url}
+                                onChange={(url) => setFormData({ ...formData, image_url: url })}
+                                label="Proje Görseli"
+                            />
 
                             <div className="flex gap-4 mt-4">
                                 <button

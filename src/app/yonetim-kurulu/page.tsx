@@ -99,8 +99,8 @@ export default function ManagementBoardAdminPage() {
                 {/* Actions Bar */}
                 <div className="flex flex-col md:flex-row gap-6 justify-between items-start md:items-center border-b border-border-brand pb-10">
                     <div className="flex flex-col gap-2">
-                        <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-text-secondary">Organizasyon</h3>
-                        <p className="text-sm font-black uppercase tracking-tighter text-foreground">Yönetici Kadrosu Yönetimi</p>
+                        <h3 className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Organizasyon</h3>
+                        <p className="text-sm font-bold uppercase tracking-widest text-slate-700">Yönetici Kadrosu Yönetimi</p>
                     </div>
 
                     <button
@@ -108,7 +108,7 @@ export default function ManagementBoardAdminPage() {
                             setEditingMember(null);
                             setIsModalOpen(true);
                         }}
-                        className="btn-primary h-16 shrink-0"
+                        className="btn-primary"
                     >
                         <UserPlus size={16} className="mr-3" /> Yeni Üye Ekle
                     </button>
@@ -119,54 +119,47 @@ export default function ManagementBoardAdminPage() {
                     {loading ? (
                         <div className="flex flex-col items-center justify-center gap-4 text-text-secondary py-20">
                             <Loader2 className="animate-spin" size={32} />
-                            <p className="text-[10px] font-black uppercase tracking-[0.5em]">Kadro Yükleniyor...</p>
+                            <p className="text-[10px] font-bold uppercase tracking-widest">Kadro Yükleniyor...</p>
                         </div>
                     ) : members.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center gap-4 text-text-secondary py-20 border border-dashed border-border-brand">
-                            <p className="text-[10px] font-black uppercase tracking-[0.5em]">Üye Bulunamadı</p>
+                        <div className="flex flex-col items-center justify-center gap-4 text-text-secondary py-20 border border-dashed border-border-brand rounded-3xl">
+                            <p className="text-[10px] font-bold uppercase tracking-widest">Üye Bulunamadı</p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             <AnimatePresence mode="popLayout">
-                                {members.map((member, idx) => (
+                                {members.map((member) => (
                                     <motion.div
                                         key={member.id}
                                         layout
                                         initial={{ opacity: 0, scale: 0.95 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         exit={{ opacity: 0, scale: 0.95 }}
-                                        className={`relative overflow-hidden border ${member.is_leader ? 'border-primary/20 bg-foreground/[0.03]' : 'border-border-brand bg-surface'} group`}
+                                        className={`relative overflow-hidden border rounded-3xl transition-all hover:shadow-xl ${member.is_leader ? 'border-primary/20 bg-primary/5' : 'border-border-brand bg-white'} group`}
                                     >
-                                        {/* Leader Badge */}
-                                        {member.is_leader && (
-                                            <div className="absolute top-0 right-0 p-4 z-10">
-                                                <Star size={16} className="text-foreground fill-current" />
-                                            </div>
-                                        )}
-
-                                        <div className="flex flex-col aspect-[4/5] relative bg-foreground/5">
+                                        <div className="flex flex-col aspect-[4/5] relative bg-slate-50">
                                             {member.image_url ? (
-                                                <Image src={member.image_url} alt={member.name} fill className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" />
+                                                <Image src={member.image_url} alt={member.name} fill className="object-cover transition-all duration-1000" />
                                             ) : (
-                                                <div className="w-full h-full flex items-center justify-center text-[10px] font-black opacity-10">FOTOĞRAF YOK</div>
+                                                <div className="w-full h-full flex items-center justify-center text-[10px] font-bold opacity-10">FOTOĞRAF YOK</div>
                                             )}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent" />
 
                                             <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col gap-1">
-                                                <h4 className="text-xl font-black uppercase tracking-tighter leading-none">{member.name}</h4>
-                                                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary italic">{member.role}</p>
+                                                <h4 className="text-xl font-bold uppercase tracking-tight text-slate-700 leading-none">{member.name}</h4>
+                                                <p className="text-[10px] font-bold uppercase tracking-widest text-primary italic">{member.role}</p>
                                             </div>
                                         </div>
 
-                                        <div className="p-8 border-t border-border-brand bg-surface/40 backdrop-blur-sm flex flex-col gap-6">
-                                            <p className="text-[10px] font-medium leading-relaxed text-text-secondary uppercase tracking-widest line-clamp-2 italic">
+                                        <div className="p-8 border-t border-border-brand bg-white/40 backdrop-blur-sm flex flex-col gap-6">
+                                            <p className="text-[10px] font-medium leading-relaxed text-slate-500 uppercase tracking-widest line-clamp-2 italic">
                                                 "{member.bio || 'Biyografi belirtilmemiş.'}"
                                             </p>
 
                                             <div className="flex items-center justify-between">
                                                 <div className="flex gap-4">
-                                                    <button className="text-text-secondary hover:text-foreground transition-colors"><Mail size={16} /></button>
-                                                    <button className="text-text-secondary hover:text-foreground transition-colors"><Linkedin size={16} /></button>
+                                                    <button className="text-slate-400 hover:text-primary transition-colors"><Mail size={16} /></button>
+                                                    <button className="text-slate-400 hover:text-primary transition-colors"><Linkedin size={16} /></button>
                                                 </div>
                                                 <div className="flex gap-2">
                                                     <button
@@ -174,24 +167,18 @@ export default function ManagementBoardAdminPage() {
                                                             setEditingMember(member);
                                                             setIsModalOpen(true);
                                                         }}
-                                                        title="Düzenle"
-                                                        className="size-10 flex items-center justify-center border border-border-brand text-text-secondary hover:text-foreground hover:border-foreground/20 transition-all bg-foreground/5"
+                                                        className="size-10 flex items-center justify-center border border-border-brand text-slate-400 hover:text-primary hover:border-primary/20 transition-all rounded-lg"
                                                     >
                                                         <Edit2 size={12} />
                                                     </button>
                                                     <button
                                                         onClick={() => member.id && handleDelete(member.id)}
-                                                        title="Sil"
-                                                        className="size-10 flex items-center justify-center border border-border-brand text-text-secondary/30 hover:text-red-500 hover:border-red-500/20 transition-all bg-foreground/5"
+                                                        className="size-10 flex items-center justify-center border border-border-brand text-slate-300 hover:text-red-500 hover:border-red-500/20 transition-all rounded-lg"
                                                     >
                                                         <Trash2 size={12} />
                                                     </button>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div className="absolute top-4 left-4 size-8 border border-border-brand flex items-center justify-center text-text-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity cursor-move">
-                                            <GripHorizontal size={14} />
                                         </div>
                                     </motion.div>
                                 ))}

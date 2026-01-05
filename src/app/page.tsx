@@ -77,7 +77,7 @@ export default function OverviewPage() {
       <DashboardLayout title="Genel Bakış">
         <div className="flex flex-col items-center justify-center h-[60vh] gap-4 text-text-secondary">
           <Loader2 className="animate-spin" size={32} />
-          <p className="text-[10px] font-black uppercase tracking-[0.5em]">Veriler Hazırlanıyor...</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.5em]">Veriler Hazırlanıyor...</p>
         </div>
       </DashboardLayout>
     );
@@ -85,34 +85,34 @@ export default function OverviewPage() {
 
   return (
     <DashboardLayout title="Genel Bakış">
-      <div className="flex flex-col gap-12">
+      <div className="flex flex-col gap-10">
 
-        {/* Welcome Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <div className="flex flex-col gap-4">
-            <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">Hoş Geldiniz</h1>
-            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-text-secondary leading-loose">
-              Karaoğlu Universal Mühendislik <br /> <span className="text-foreground">Dijital Yönetim Merkezi</span>
+        {/* Welcome Section - Professional Crystal */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 py-2">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-3xl font-bold text-slate-700 tracking-tight">Hoş Geldiniz, Admin</h1>
+            <p className="text-sm font-medium text-slate-500">
+              Karaoğlu Universal Mühendislik <span className="mx-2 text-slate-300">|</span> <span className="text-primary font-semibold">Sistem Yönetim Merkezi</span>
             </p>
           </div>
-          <div className="flex gap-4">
-            <Link href="/projeler" className="btn-primary gap-3">
-              <Plus size={14} /> Yeni İçerik
+          <div className="flex gap-3">
+            <Link href="/projeler" className="btn-primary">
+              <Plus size={16} /> Yeni İçerik Ekle
             </Link>
           </div>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {stats.map((stat) => (
-            <div key={stat.label} className="p-10 border border-border-brand bg-surface flex flex-col gap-8 group hover:border-foreground/10 transition-all">
+            <div key={stat.label} className="card-premium rounded-3xl flex flex-col gap-8 group">
               <div className="flex justify-between items-start">
-                <div className="text-text-secondary group-hover:text-foreground transition-colors">{stat.icon}</div>
-                <div className="text-[8px] font-black text-text-secondary/60 border border-border-brand px-2 py-1 uppercase tracking-widest">{stat.trend}</div>
+                <div className="size-12 bg-primary/5 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">{stat.icon}</div>
+                <div className="text-[10px] font-bold text-text-secondary/60 bg-surface px-3 py-1 rounded-full uppercase tracking-widest">{stat.trend}</div>
               </div>
-              <div className="flex flex-col gap-2">
-                <span className="text-[9px] font-black uppercase tracking-[0.4em] text-text-secondary">{stat.label}</span>
-                <span className="text-5xl font-black tracking-tighter">{stat.value}</span>
+              <div className="flex flex-col gap-1">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-text-secondary">{stat.label}</span>
+                <span className="text-5xl font-bold text-slate-700 tracking-tighter">{stat.value}</span>
               </div>
             </div>
           ))}
@@ -122,33 +122,33 @@ export default function OverviewPage() {
           {/* Projects Column */}
           <div className="lg:col-span-2 flex flex-col gap-8">
             <div className="flex items-center justify-between border-b border-border-brand pb-6">
-              <h2 className="text-lg font-black uppercase tracking-[0.4em]">Son Projeler</h2>
-              <Link href="/projeler" className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary hover:text-foreground transition-colors">Tümünü Yönet</Link>
+              <h2 className="text-lg font-bold uppercase tracking-widest text-slate-700">Son Projeler</h2>
+              <Link href="/projeler" className="text-[10px] font-bold uppercase tracking-widest text-text-secondary hover:text-primary transition-colors">Tümünü Yönet</Link>
             </div>
 
             <div className="flex flex-col gap-4">
               {recentProjects.length === 0 ? (
-                <div className="p-10 border border-dashed border-border-brand text-center">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-text-secondary">Henüz proje eklenmemiş</p>
+                <div className="p-10 border border-dashed border-border-brand rounded-2xl text-center bg-surface/50">
+                  <p className="text-[11px] font-bold uppercase tracking-widest text-text-secondary">Henüz proje eklenmemiş</p>
                 </div>
               ) : (
                 recentProjects.map((project) => (
-                  <div key={project.id} className="group p-6 border border-border-brand bg-surface hover:border-foreground/20 flex items-center gap-8 transition-all">
-                    <div className="relative size-20 shrink-0 overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-700 bg-foreground/5">
-                      {project.image_url && <Image src={project.image_url} alt={project.title} fill className="object-cover" />}
+                  <div key={project.id} className="group p-5 bg-white rounded-2xl shadow-sm hover:shadow-md border border-transparent hover:border-primary/10 flex items-center gap-6 transition-all duration-300">
+                    <div className="relative size-20 shrink-0 rounded-xl overflow-hidden shadow-inner bg-surface">
+                      {project.image_url && <Image src={project.image_url} alt={project.title} fill className="object-cover transition-transform duration-700 group-hover:scale-110" />}
                     </div>
-                    <div className="flex-1 flex flex-col gap-2">
+                    <div className="flex-1 flex flex-col justify-center">
                       <div className="flex justify-between items-start">
                         <div>
-                          <span className="text-[8px] font-black text-text-secondary/40 uppercase tracking-[0.4em] block mb-1">{project.location}</span>
-                          <h4 className="text-lg font-black uppercase tracking-tighter">{project.title}</h4>
+                          <span className="text-[10px] font-bold text-primary uppercase tracking-widest block mb-1">{project.location}</span>
+                          <h4 className="text-lg font-bold text-slate-700 tracking-tight">{project.title}</h4>
                         </div>
-                        <span className={`text-[8px] font-black px-2 py-1 uppercase tracking-widest ${project.status === "Tamamlandı" ? "bg-foreground text-background" : "border border-border-brand text-foreground"}`}>
+                        <span className={`text-[9px] font-bold px-3 py-1 rounded-full uppercase tracking-widest ${project.status === "Tamamlandı" ? "bg-blue-50 text-blue-600 border border-blue-100" : "bg-orange-50 text-orange-600 border border-orange-100"}`}>
                           {project.status}
                         </span>
                       </div>
                     </div>
-                    <Link href="/projeler" className="size-10 flex items-center justify-center text-text-secondary/40 group-hover:text-foreground transition-colors border border-border-brand">
+                    <Link href="/projeler" className="size-11 rounded-xl bg-surface flex items-center justify-center text-text-secondary group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
                       <ArrowUpRight size={18} />
                     </Link>
                   </div>
@@ -160,7 +160,7 @@ export default function OverviewPage() {
           {/* Static Activity for now until an activity logging system is implemented */}
           <div className="flex flex-col gap-8">
             <div className="flex items-center justify-between border-b border-border-brand pb-6">
-              <h2 className="text-lg font-black uppercase tracking-[0.4em]">Aktivite</h2>
+              <h2 className="text-lg font-bold uppercase tracking-widest text-slate-700">Aktivite</h2>
             </div>
 
             <div className="flex flex-col gap-8 opacity-50">
@@ -170,8 +170,8 @@ export default function OverviewPage() {
                   <Clock size={8} className="text-text-secondary" />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="text-[8px] font-black uppercase tracking-[0.3em] text-text-secondary/40">Şimdi</span>
-                  <p className="text-[10px] font-black uppercase tracking-widest">Sistem Hazır</p>
+                  <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-text-secondary/40">Şimdi</span>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-slate-700">Sistem Hazır</p>
                   <p className="text-[10px] font-medium text-text-secondary uppercase tracking-widest">Tüm veriler Supabase ile bağlandı</p>
                 </div>
               </div>
@@ -179,8 +179,8 @@ export default function OverviewPage() {
 
             <div className="mt-auto p-10 border border-border-brand bg-surface flex flex-col items-center text-center gap-6">
               <TrendingUp className="text-text-secondary/40" size={32} />
-              <p className="text-[9px] font-black uppercase tracking-[0.4em] leading-loose text-text-secondary">
-                Veritabanı bağlantısı <br /> <span className="text-foreground">Aktif ve Güvenli</span>
+              <p className="text-[9px] font-bold uppercase tracking-[0.4em] leading-loose text-text-secondary">
+                Veritabanı bağlantısı <br /> <span className="text-slate-700">Aktif ve Güvenli</span>
               </p>
               <button className="btn-outline h-12 w-full text-[9px]">Sistem Durumu</button>
             </div>

@@ -11,7 +11,7 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children, title }: DashboardLayoutProps) {
     return (
-        <div className="flex h-screen bg-black overflow-hidden font-sans">
+        <div className="flex h-screen bg-background overflow-hidden font-sans">
             <Sidebar />
 
             <main className="flex-1 flex flex-col h-full overflow-y-auto overflow-x-hidden">

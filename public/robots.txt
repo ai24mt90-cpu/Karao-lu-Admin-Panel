@@ -1,0 +1,10 @@
+/*
+  # Admin Panel Public Access File
+  
+  This file is required for Netlify deployment.
+  It allows public access to the static files.
+*/
+
+# Allow all robots
+User-agent: *
+Allow: /

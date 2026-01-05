@@ -65,7 +65,7 @@ export default function FAQModal({ isOpen, onClose, onSave, editingFaq }: FAQMod
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+                        className="absolute inset-0 bg-slate-900/10 backdrop-blur-sm"
                     />
 
                     <motion.div
@@ -76,14 +76,14 @@ export default function FAQModal({ isOpen, onClose, onSave, editingFaq }: FAQMod
                     >
                         <div className="flex justify-between items-start mb-10">
                             <div className="flex flex-col gap-2">
-                                <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-text-secondary">
+                                <h3 className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">
                                     {editingFaq ? "Maddeyi Düzenle" : "Yeni Madde Ekle"}
                                 </h3>
-                                <p className="text-xl font-black uppercase tracking-tighter">S.S.S. Detayları</p>
+                                <p className="text-xl font-bold text-slate-700 tracking-tight">S.S.S. Detayları</p>
                             </div>
                             <button
                                 onClick={onClose}
-                                className="size-10 flex items-center justify-center border border-border-brand hover:border-foreground/20 transition-all"
+                                className="size-10 flex items-center justify-center border border-border-brand hover:bg-slate-50 transition-all rounded-lg text-slate-400 hover:text-slate-600"
                             >
                                 <X size={20} />
                             </button>
@@ -92,7 +92,7 @@ export default function FAQModal({ isOpen, onClose, onSave, editingFaq }: FAQMod
                         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
                             {/* Question */}
                             <div className="flex flex-col gap-3">
-                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Soru</label>
+                                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Soru</label>
                                 <input
                                     required
                                     type="text"
@@ -106,7 +106,7 @@ export default function FAQModal({ isOpen, onClose, onSave, editingFaq }: FAQMod
                             {/* Category & Order */}
                             <div className="grid grid-cols-2 gap-8">
                                 <div className="flex flex-col gap-3">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Kategori</label>
+                                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Kategori</label>
                                     <select
                                         value={formData.category}
                                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
@@ -116,7 +116,7 @@ export default function FAQModal({ isOpen, onClose, onSave, editingFaq }: FAQMod
                                     </select>
                                 </div>
                                 <div className="flex flex-col gap-3">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Sıralama</label>
+                                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Sıralama</label>
                                     <input
                                         type="number"
                                         value={formData.order_index}
@@ -128,7 +128,7 @@ export default function FAQModal({ isOpen, onClose, onSave, editingFaq }: FAQMod
 
                             {/* Answer */}
                             <div className="flex flex-col gap-3">
-                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Cevap</label>
+                                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Cevap</label>
                                 <textarea
                                     required
                                     rows={4}

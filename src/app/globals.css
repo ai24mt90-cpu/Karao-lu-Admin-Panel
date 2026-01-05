@@ -2,25 +2,19 @@
 
 :root {
   --background: #f8fafc;
-  --foreground: #020617;
-  --primary: #000000;
+  --foreground: #475569;
+  --primary: #3b82f6;
   --surface: #ffffff;
   --border: #e2e8f0;
-  --text-secondary: #64748b;
+  --text-secondary: #94a3b8;
   --card: #ffffff;
-  --accent: #1152d4;
+  --accent: #60a5fa;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
-.dark {
-  --background: #000000;
-  --foreground: #ffffff;
-  --primary: #ffffff;
-  --surface: #0a0a0a;
-  --border: #1a1a1a;
-  --text-secondary: #a3a3a3;
-  --card: #0a0a0a;
-  --accent: #1152d4;
-}
+
 
 @theme inline {
   --color-background: var(--background);
@@ -31,32 +25,33 @@
   --color-text-secondary: var(--text-secondary);
   --color-card: var(--card);
   --color-accent: var(--accent);
+  --shadow-soft: var(--shadow);
+  --shadow-soft-md: var(--shadow-md);
 
   --font-sans: var(--font-public-sans);
 }
 
 @layer base {
   body {
-    @apply bg-background text-foreground antialiased transition-colors duration-300;
-    font-family: var(--font-public-sans), sans-serif;
+    @apply bg-background text-foreground transition-colors duration-200 antialiased;
   }
 }
 
 @layer components {
-  .admin-card {
-    @apply bg-card border border-border-brand rounded-none p-6 transition-all hover:border-primary/20;
-  }
-
   .input-field {
-    @apply h-14 w-full bg-surface border border-border-brand px-6 text-[11px] font-black tracking-widest outline-none focus:border-foreground/30 transition-all placeholder:text-text-secondary/30;
+    @apply h-12 w-full bg-white border border-border-brand rounded-lg px-4 text-sm font-medium outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all placeholder:text-text-secondary/50;
   }
 
   .btn-primary {
-    @apply h-14 px-10 bg-foreground text-background text-[10px] font-black uppercase tracking-[0.3em] flex items-center justify-center transition-all hover:opacity-90 active:scale-95 disabled:opacity-50;
+    @apply h-11 px-6 bg-primary text-white font-semibold text-sm rounded-lg hover:bg-accent transition-all flex items-center justify-center gap-2 disabled:opacity-50 shadow-sm hover:shadow-md active:scale-95;
   }
 
   .btn-outline {
-    @apply h-14 px-10 border border-border-brand bg-transparent text-foreground text-[10px] font-black uppercase tracking-[0.3em] flex items-center justify-center transition-all hover:bg-foreground/5 active:scale-95 disabled:opacity-50;
+    @apply h-11 px-6 border border-border-brand bg-white text-foreground font-semibold text-sm rounded-lg hover:bg-slate-50 transition-all flex items-center justify-center gap-2 active:scale-95;
+  }
+
+  .card-premium {
+    @apply bg-card border border-border-brand rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300;
   }
 }
 

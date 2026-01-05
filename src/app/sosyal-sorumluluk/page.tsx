@@ -114,8 +114,8 @@ export default function SocialResponsibilityAdminPage() {
                 {/* Actions Bar */}
                 <div className="flex flex-col md:flex-row gap-6 justify-between items-start md:items-center border-b border-border-brand pb-10">
                     <div className="flex flex-col gap-2">
-                        <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-text-secondary">Yönetim</h3>
-                        <p className="text-sm font-black uppercase tracking-tighter text-foreground">Program ve Bağış Listesi</p>
+                        <h3 className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">Yönetim</h3>
+                        <p className="text-sm font-bold uppercase tracking-widest text-slate-700">Program ve Bağış Listesi</p>
                     </div>
 
                     <button
@@ -123,7 +123,7 @@ export default function SocialResponsibilityAdminPage() {
                             setEditingProgram(null);
                             setIsModalOpen(true);
                         }}
-                        className="btn-primary h-16 shrink-0"
+                        className="btn-primary"
                     >
                         <Plus size={16} className="mr-3" /> Yeni Program Ekle
                     </button>
@@ -135,7 +135,7 @@ export default function SocialResponsibilityAdminPage() {
                         <button
                             key={cat}
                             onClick={() => setActiveCategory(cat)}
-                            className={`h-12 px-8 text-[9px] font-black uppercase tracking-[0.2em] border transition-all ${activeCategory === cat ? "bg-foreground text-background border-foreground" : "border-border-brand text-text-secondary hover:text-foreground"}`}
+                            className={`h-11 px-8 text-[9px] font-bold uppercase tracking-widest border transition-all rounded-full ${activeCategory === cat ? "bg-primary text-white border-primary shadow-lg shadow-primary/20" : "border-border-brand bg-white text-text-secondary hover:text-primary hover:border-primary/20"}`}
                         >
                             {cat}
                         </button>
@@ -147,11 +147,11 @@ export default function SocialResponsibilityAdminPage() {
                     {loading ? (
                         <div className="flex-1 flex flex-col items-center justify-center gap-4 text-text-secondary py-20">
                             <Loader2 className="animate-spin" size={32} />
-                            <p className="text-[10px] font-black uppercase tracking-[0.5em]">Programlar Yükleniyor...</p>
+                            <p className="text-[10px] font-bold uppercase tracking-widest">Programlar Yükleniyor...</p>
                         </div>
                     ) : filteredPrograms.length === 0 ? (
                         <div className="flex-1 flex flex-col items-center justify-center gap-4 text-text-secondary py-20 border border-dashed border-border-brand">
-                            <p className="text-[10px] font-black uppercase tracking-[0.5em]">Program Bulunamadı</p>
+                            <p className="text-[10px] font-bold uppercase tracking-widest">Program Bulunamadı</p>
                         </div>
                     ) : (
                         <AnimatePresence mode="popLayout">
@@ -162,24 +162,24 @@ export default function SocialResponsibilityAdminPage() {
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, scale: 0.95 }}
-                                    className="p-8 border border-border-brand bg-surface hover:bg-foreground/[0.02] hover:border-foreground/10 transition-all flex flex-col md:flex-row items-center gap-10 group"
+                                    className="p-8 border border-border-brand bg-white hover:bg-slate-50 transition-all flex flex-col md:flex-row items-center gap-10 group rounded-3xl hover:shadow-xl"
                                 >
-                                    <div className="relative size-24 shrink-0 grayscale group-hover:grayscale-0 transition-all duration-700 overflow-hidden bg-foreground/5">
+                                    <div className="relative size-24 shrink-0 grayscale group-hover:grayscale-0 transition-all duration-700 overflow-hidden bg-slate-50 rounded-2xl">
                                         {program.image_url ? (
                                             <Image src={program.image_url} alt={program.title} fill className="object-cover" />
                                         ) : (
-                                            <div className="w-full h-full flex items-center justify-center text-[8px] font-black opacity-10">NO IMG</div>
+                                            <div className="w-full h-full flex items-center justify-center text-[8px] font-bold opacity-10">FOTOĞRAF YOK</div>
                                         )}
                                     </div>
 
                                     <div className="flex-1 flex flex-col gap-2">
-                                        <div className="flex items-center gap-3 text-text-secondary italic text-[10px] font-black uppercase tracking-widest opacity-40">
+                                        <div className="flex items-center gap-3 text-primary text-[10px] font-bold uppercase tracking-widest opacity-60">
                                             {getIcon(program.icon_type)} {program.category}
                                         </div>
-                                        <h4 className="text-xl font-black uppercase tracking-tighter">{program.title}</h4>
+                                        <h4 className="text-xl font-bold uppercase tracking-tight text-slate-700">{program.title}</h4>
                                         <div className="flex gap-6 mt-2">
-                                            <div className="text-[9px] font-black uppercase tracking-[0.4em] text-text-secondary">Konum: <span className="text-foreground">{program.location || 'BELİRTİLMEMİŞ'}</span></div>
-                                            <div className="text-[9px] font-black uppercase tracking-[0.4em] text-text-secondary">Tarih: <span className="text-foreground">{program.date || 'BELİRTİLMEMİŞ'}</span></div>
+                                            <div className="text-[9px] font-bold uppercase tracking-widest text-text-secondary">Konum: <span className="text-slate-500">{program.location || 'BELİRTİLMEMİŞ'}</span></div>
+                                            <div className="text-[9px] font-bold uppercase tracking-widest text-text-secondary">Tarih: <span className="text-slate-500">{program.date || 'BELİRTİLMEMİŞ'}</span></div>
                                         </div>
                                     </div>
 
@@ -189,15 +189,13 @@ export default function SocialResponsibilityAdminPage() {
                                                 setEditingProgram(program);
                                                 setIsModalOpen(true);
                                             }}
-                                            title="Düzenle"
-                                            className="size-12 flex items-center justify-center border border-border-brand text-text-secondary hover:text-foreground hover:border-foreground/20 transition-all"
+                                            className="size-11 flex items-center justify-center border border-border-brand text-slate-400 hover:text-primary hover:border-primary/20 transition-all rounded-xl"
                                         >
                                             <Edit2 size={16} />
                                         </button>
                                         <button
                                             onClick={() => program.id && handleDelete(program.id)}
-                                            title="Sil"
-                                            className="size-12 flex items-center justify-center border border-border-brand text-text-secondary/50 hover:text-red-500 hover:border-red-500/20 transition-all"
+                                            className="size-11 flex items-center justify-center border border-border-brand text-slate-300 hover:text-red-500 hover:border-red-500/20 transition-all rounded-xl"
                                         >
                                             <Trash2 size={16} />
                                         </button>

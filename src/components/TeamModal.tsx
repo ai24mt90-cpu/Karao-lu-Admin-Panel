@@ -1,8 +1,9 @@
 "use client";
 
-import { X, Save, Upload, Loader2, Star } from "lucide-react";
+import { X, Save, Loader2, Star } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ImageUpload from "./ImageUpload";
 
 interface TeamMember {
     id?: string;
@@ -67,7 +68,7 @@ export default function TeamModal({ isOpen, onClose, onSave, editingMember }: Te
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="absolute inset-0 bg-background/80 backdrop-blur-sm"
+                        className="absolute inset-0 bg-slate-900/10 backdrop-blur-sm"
                     />
 
                     <motion.div
@@ -78,14 +79,14 @@ export default function TeamModal({ isOpen, onClose, onSave, editingMember }: Te
                     >
                         <div className="flex justify-between items-start mb-10">
                             <div className="flex flex-col gap-2">
-                                <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-text-secondary">
+                                <h3 className="text-[10px] font-bold uppercase tracking-widest text-text-secondary">
                                     {editingMember ? "Üyeyi Düzenle" : "Yeni Üye Ekle"}
                                 </h3>
-                                <p className="text-xl font-black uppercase tracking-tighter">Yönetici Bilgileri</p>
+                                <p className="text-xl font-bold text-slate-700 tracking-tight">Yönetici Bilgileri</p>
                             </div>
                             <button
                                 onClick={onClose}
-                                className="size-10 flex items-center justify-center border border-border-brand hover:border-foreground/20 transition-all"
+                                className="size-10 flex items-center justify-center border border-border-brand hover:bg-slate-50 transition-all rounded-lg text-slate-400 hover:text-slate-600"
                             >
                                 <X size={20} />
                             </button>
@@ -94,7 +95,7 @@ export default function TeamModal({ isOpen, onClose, onSave, editingMember }: Te
                         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
                             {/* Name */}
                             <div className="flex flex-col gap-3">
-                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Ad Soyad</label>
+                                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Ad Soyad</label>
                                 <input
                                     required
                                     type="text"
@@ -107,7 +108,7 @@ export default function TeamModal({ isOpen, onClose, onSave, editingMember }: Te
 
                             {/* Role */}
                             <div className="flex flex-col gap-3">
-                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Pozisyon / Ünvan</label>
+                                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Pozisyon / Ünvan</label>
                                 <input
                                     required
                                     type="text"
@@ -121,11 +122,11 @@ export default function TeamModal({ isOpen, onClose, onSave, editingMember }: Te
                             {/* Leader Switch & Order */}
                             <div className="grid grid-cols-2 gap-8">
                                 <div className="flex items-center gap-4 h-14 px-6 border border-border-brand bg-surface">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary flex-1">Lider Statüsü</label>
+                                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary flex-1">Lider Statüsü</label>
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, is_leader: !formData.is_leader })}
-                                        className={`size-6 border flex items-center justify-center transition-all ${formData.is_leader ? 'bg-foreground border-foreground text-background' : 'border-border-brand text-text-secondary/20'}`}
+                                        className={`size-6 border rounded flex items-center justify-center transition-all ${formData.is_leader ? 'bg-primary border-primary text-white' : 'border-border-brand text-text-secondary/20'}`}
                                     >
                                         <Star size={12} fill={formData.is_leader ? "currentColor" : "none"} />
                                     </button>
@@ -143,7 +144,7 @@ export default function TeamModal({ isOpen, onClose, onSave, editingMember }: Te
 
                             {/* Bio */}
                             <div className="flex flex-col gap-3">
-                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Kısa Biyografi</label>
+                                <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">Kısa Biyografi</label>
                                 <textarea
                                     rows={4}
                                     value={formData.bio}
@@ -153,22 +154,12 @@ export default function TeamModal({ isOpen, onClose, onSave, editingMember }: Te
                                 />
                             </div>
 
-                            {/* Image URL */}
-                            <div className="flex flex-col gap-3">
-                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary">Fotoğraf URL</label>
-                                <div className="flex gap-4">
-                                    <input
-                                        type="text"
-                                        value={formData.image_url}
-                                        onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                                        className="input-field flex-1"
-                                        placeholder="https://..."
-                                    />
-                                    <button type="button" className="size-14 shrink-0 flex items-center justify-center border border-border-brand hover:bg-foreground/5 text-text-secondary transition-all">
-                                        <Upload size={18} />
-                                    </button>
-                                </div>
-                            </div>
+                            {/* Image Upload */}
+                            <ImageUpload
+                                value={formData.image_url}
+                                onChange={(url) => setFormData({ ...formData, image_url: url })}
+                                label="Yönetici Fotoğrafı"
+                            />
 
                             <div className="flex gap-4 mt-4">
                                 <button
