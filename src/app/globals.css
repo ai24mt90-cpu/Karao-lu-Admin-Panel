@@ -1,6 +1,17 @@
 @import "tailwindcss";
 
 :root {
+  --background: #f8fafc;
+  --foreground: #020617;
+  --primary: #000000;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --text-secondary: #64748b;
+  --card: #ffffff;
+  --accent: #1152d4;
+}
+
+.dark {
   --background: #000000;
   --foreground: #ffffff;
   --primary: #ffffff;
@@ -9,7 +20,6 @@
   --text-secondary: #a3a3a3;
   --card: #0a0a0a;
   --accent: #1152d4;
-  /* Keeping a subtle blue for interactive elements like progress bars as in Stitch */
 }
 
 @theme inline {
@@ -27,26 +37,26 @@
 
 @layer base {
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased transition-colors duration-300;
     font-family: var(--font-public-sans), sans-serif;
   }
 }
 
 @layer components {
   .admin-card {
-    @apply bg-card border border-border-brand rounded-none p-6 transition-all hover:border-white/20;
+    @apply bg-card border border-border-brand rounded-none p-6 transition-all hover:border-primary/20;
   }
 
   .input-field {
-    @apply w-full bg-surface border border-border-brand px-4 py-3 text-sm text-foreground outline-none focus:border-white/40 transition-all;
+    @apply w-full bg-surface border border-border-brand px-4 py-3 text-sm text-foreground outline-none focus:border-primary/40 transition-all;
   }
 
   .btn-primary {
-    @apply flex items-center justify-center bg-white text-black px-8 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:bg-white/90 active:scale-95 disabled:opacity-50;
+    @apply flex items-center justify-center bg-foreground text-background px-8 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:opacity-90 active:scale-95 disabled:opacity-50;
   }
 
   .btn-outline {
-    @apply flex items-center justify-center border border-white/20 bg-transparent text-white px-8 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:bg-white/5 active:scale-95;
+    @apply flex items-center justify-center border border-border-brand bg-transparent text-foreground px-8 py-3 text-[10px] font-black uppercase tracking-[0.2em] transition-all hover:bg-foreground/5 active:scale-95;
   }
 }
 
@@ -60,5 +70,5 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-white/10 rounded-full hover:bg-white/20;
+  @apply bg-foreground/10 rounded-full hover:bg-foreground/20;
 }

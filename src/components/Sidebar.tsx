@@ -33,14 +33,14 @@ export default function Sidebar() {
     };
 
     return (
-        <aside className="w-72 flex flex-col border-r border-white/5 bg-black h-screen sticky top-0">
+        <aside className="w-72 flex flex-col border-r border-border-brand bg-surface h-screen sticky top-0">
             <div className="flex flex-col h-full p-8">
                 {/* Brand */}
                 <div className="flex items-center gap-4 mb-20">
-                    <Logo size={48} className="text-white" />
+                    <Logo size={48} className="text-foreground" />
                     <div className="flex flex-col">
                         <span className="text-lg font-black uppercase tracking-tighter leading-none">Karaoğlu</span>
-                        <span className="text-[8px] font-medium uppercase tracking-[0.2em] text-white/40">Yönetim Paneli</span>
+                        <span className="text-[8px] font-medium uppercase tracking-[0.2em] text-text-secondary">Yönetim Paneli</span>
                     </div>
                 </div>
 
@@ -54,8 +54,8 @@ export default function Sidebar() {
                                 href={link.href}
                                 className={`flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all
                   ${isActive
-                                        ? "bg-white text-black"
-                                        : "text-white/40 hover:text-white hover:bg-white/5"
+                                        ? "bg-foreground text-background"
+                                        : "text-text-secondary hover:text-foreground hover:bg-foreground/5"
                                     }`}
                             >
                                 {link.icon}
@@ -66,17 +66,17 @@ export default function Sidebar() {
                 </nav>
 
                 {/* Bottom Actions */}
-                <div className="flex flex-col gap-4 pt-8 border-t border-white/5">
+                <div className="flex flex-col gap-4 pt-8 border-t border-border-brand">
                     <Link
                         href="/ayarlar"
-                        className="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-white transition-all"
+                        className="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary hover:text-foreground transition-all"
                     >
                         <Settings size={18} />
                         Ayarlar
                     </Link>
                     <button
                         onClick={handleLogout}
-                        className="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-red-500 transition-all"
+                        className="flex items-center gap-4 px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-text-secondary hover:text-red-500 transition-all"
                     >
                         <LogOut size={18} />
                         Çıkış Yap
