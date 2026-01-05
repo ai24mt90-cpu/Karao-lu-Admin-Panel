@@ -25,7 +25,7 @@ export default function ImageUpload({ value, onChange, label = "Görsel Yükle" 
             onChange(url);
         } catch (error) {
             console.error("Upload error:", error);
-            alert("Görsel yüklenirken bir hata oluştu. Lütfen 'uploads' bucket'ının supabase'de oluşturulduğundan ve kamuya açık (public) olduğundan emin olun.");
+            alert("Görsel yüklenirken bir hata oluştu. Lütfen 'images' bucket'ının Supabase'de oluşturulduğundan ve public olduğundan emin olun.");
         } finally {
             setLoading(false);
         }

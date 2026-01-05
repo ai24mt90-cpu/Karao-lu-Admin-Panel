@@ -6,7 +6,7 @@ import { supabase } from "./supabase";
  * @param bucket The bucket name (default: 'uploads')
  * @returns The public URL of the uploaded file
  */
-export async function uploadImage(file: File, bucket: string = "uploads"): Promise<string> {
+export async function uploadImage(file: File, bucket: string = "images"): Promise<string> {
     const fileExt = file.name.split(".").pop();
     const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
     const filePath = `${fileName}`;
