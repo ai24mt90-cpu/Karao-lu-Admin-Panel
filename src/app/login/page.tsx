@@ -85,7 +85,7 @@ export default function LoginPage() {
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="h-16 w-full bg-slate-50 border border-border-brand px-14 text-sm font-bold tracking-widest outline-none focus:border-primary/40 focus:bg-white focus:shadow-xl focus:shadow-primary/5 transition-all uppercase rounded-2xl"
+                                    className="h-16 w-full bg-slate-50 border border-border-brand px-14 text-sm font-medium tracking-wide outline-none focus:border-primary/40 focus:bg-white focus:shadow-xl focus:shadow-primary/5 transition-all rounded-2xl"
                                     placeholder="admin@karaoglu.com"
                                     required
                                 />
@@ -100,7 +100,7 @@ export default function LoginPage() {
                                     type="password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="h-16 w-full bg-slate-50 border border-border-brand px-14 text-sm font-bold tracking-widest outline-none focus:border-primary/40 focus:bg-white focus:shadow-xl focus:shadow-primary/5 transition-all uppercase rounded-2xl"
+                                    className="h-16 w-full bg-slate-50 border border-border-brand px-14 text-sm font-medium tracking-wide outline-none focus:border-primary/40 focus:bg-white focus:shadow-xl focus:shadow-primary/5 transition-all rounded-2xl"
                                     placeholder="••••••••"
                                     required
                                 />
