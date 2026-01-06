@@ -10,7 +10,9 @@ import {
     Image as ImageIcon,
     Settings,
     LogOut,
-    Globe
+    Globe,
+    Newspaper,
+    FileText
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
@@ -19,6 +21,8 @@ const navLinks = [
     { href: "/projeler", label: "Projeler", icon: <Briefcase size={18} /> },
     { href: "/son-calismalar", label: "Son Çalışmalar", icon: <ImageIcon size={18} /> },
     { href: "/sosyal-sorumluluk", label: "Sosyal Sorumluluk", icon: <Globe size={18} /> },
+    { href: "/haberler", label: "Haberler", icon: <Newspaper size={18} /> },
+    { href: "/blog", label: "Blog", icon: <FileText size={18} /> },
     { href: "/sss", label: "S.S.S.", icon: <HelpCircle size={18} /> },
     { href: "/yonetim-kurulu", label: "Yönetim Kurulu", icon: <Users size={18} /> },
 ];
