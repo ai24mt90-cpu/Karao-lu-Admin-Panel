@@ -9,7 +9,8 @@ import {
     Trash2,
     MapPin,
     Loader2,
-    Images
+    Images,
+    Star
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
@@ -27,6 +28,7 @@ interface Project {
     status: string;
     image_url?: string;
     description?: string;
+    is_featured?: boolean;
 }
 
 export default function ProjectsAdminPage() {
@@ -96,6 +98,23 @@ export default function ProjectsAdminPage() {
             alert("Silme hatası: " + error.message);
         } else {
             setProjects(projects.filter(p => p.id !== id));
+        }
+    };
+
+    const toggleFeatured = async (project: Project) => {
+        if (!project.id) return;
+
+        const { error } = await supabase
+            .from("projects")
+            .update({ is_featured: !project.is_featured })
+            .eq("id", project.id);
+
+        if (error) {
+            alert("Hata: " + error.message);
+        } else {
+            setProjects(projects.map(p =>
+                p.id === project.id ? { ...p, is_featured: !p.is_featured } : p
+            ));
         }
     };
 
@@ -203,6 +222,16 @@ export default function ProjectsAdminPage() {
                                         </div>
 
                                         <div className="col-span-2 flex items-center justify-end gap-2">
+                                            <button
+                                                onClick={() => toggleFeatured(project)}
+                                                className={`size-10 flex items-center justify-center border transition-all rounded-lg ${project.is_featured
+                                                        ? "bg-yellow-500 border-yellow-500 text-white"
+                                                        : "border-border-brand text-slate-400 hover:text-yellow-500 hover:border-yellow-500/20"
+                                                    }`}
+                                                title={project.is_featured ? "Ana Sayfadan Kaldır" : "Ana Sayfaya Ekle"}
+                                            >
+                                                <Star size={14} fill={project.is_featured ? "white" : "none"} />
+                                            </button>
                                             <button
                                                 onClick={() => {
                                                     setSelectedProjectForImages(project);
