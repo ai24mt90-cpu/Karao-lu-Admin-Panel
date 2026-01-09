@@ -8,13 +8,15 @@ import {
     Edit2,
     Trash2,
     MapPin,
-    Loader2
+    Loader2,
+    Images
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import ProjectModal from "@/components/ProjectModal";
+import ProjectImagesModal from "@/components/ProjectImagesModal";
 
 interface Project {
     id?: string;
@@ -33,6 +35,10 @@ export default function ProjectsAdminPage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingProject, setEditingProject] = useState<Project | null>(null);
+
+    // Images Modal State
+    const [isImagesModalOpen, setIsImagesModalOpen] = useState(false);
+    const [selectedProjectForImages, setSelectedProjectForImages] = useState<Project | null>(null);
 
     useEffect(() => {
         fetchProjects();
@@ -199,6 +205,16 @@ export default function ProjectsAdminPage() {
                                         <div className="col-span-2 flex items-center justify-end gap-2">
                                             <button
                                                 onClick={() => {
+                                                    setSelectedProjectForImages(project);
+                                                    setIsImagesModalOpen(true);
+                                                }}
+                                                className="size-10 flex items-center justify-center border border-border-brand text-slate-400 hover:text-green-500 hover:border-green-500/20 transition-all rounded-lg"
+                                                title="Fotoğraflar"
+                                            >
+                                                <Images size={14} />
+                                            </button>
+                                            <button
+                                                onClick={() => {
                                                     setEditingProject(project);
                                                     setIsModalOpen(true);
                                                 }}
@@ -236,6 +252,19 @@ export default function ProjectsAdminPage() {
                 onSave={handleSave}
                 editingProject={editingProject}
             />
+
+            {selectedProjectForImages && (
+                <ProjectImagesModal
+                    isOpen={isImagesModalOpen}
+                    onClose={() => {
+                        setIsImagesModalOpen(false);
+                        setSelectedProjectForImages(null);
+                        fetchProjects(); // Refresh to update cover images
+                    }}
+                    projectId={selectedProjectForImages.id || ""}
+                    projectTitle={selectedProjectForImages.title}
+                />
+            )}
         </DashboardLayout>
     );
 }
