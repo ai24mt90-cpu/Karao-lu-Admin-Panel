@@ -12,13 +12,15 @@ import {
     LogOut,
     Globe,
     Newspaper,
-    FileText
+    FileText,
+    Mail
 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 const navLinks = [
     { href: "/", label: "Genel Bakış", icon: <BarChart3 size={18} /> },
     { href: "/projeler", label: "Projeler", icon: <Briefcase size={18} /> },
+    { href: "/mesajlar", label: "Mesajlar", icon: <Mail size={18} /> },
     { href: "/son-calismalar", label: "Son Çalışmalar", icon: <ImageIcon size={18} /> },
     { href: "/sosyal-sorumluluk", label: "Sosyal Sorumluluk", icon: <Globe size={18} /> },
     { href: "/haberler", label: "Haberler", icon: <Newspaper size={18} /> },
