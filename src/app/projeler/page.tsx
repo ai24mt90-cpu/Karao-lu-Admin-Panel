@@ -162,10 +162,11 @@ export default function ProjectsAdminPage() {
                     {/* Header Row */}
                     <div className="grid grid-cols-12 px-8 py-4 text-[10px] font-bold uppercase tracking-widest text-text-secondary/50">
                         <div className="col-span-1">Görsel</div>
-                        <div className="col-span-4">Proje Adı / Konum</div>
-                        <div className="col-span-2">Kategori</div>
-                        <div className="col-span-2">Durum</div>
+                        <div className="col-span-3">Kurum / İşveren</div>
+                        <div className="col-span-3">İşin Adı</div>
+                        <div className="col-span-1">Lokasyon</div>
                         <div className="col-span-1">Yıl</div>
+                        <div className="col-span-1">Durum</div>
                         <div className="col-span-2 text-right">İşlemler</div>
                     </div>
 
@@ -200,33 +201,36 @@ export default function ProjectsAdminPage() {
                                             </div>
                                         </div>
 
-                                        <div className="col-span-4 flex flex-col gap-1">
+                                        <div className="col-span-3 flex flex-col gap-1">
                                             <h4 className="text-sm font-bold uppercase tracking-tight text-slate-700">{project.title}</h4>
-                                            <div className="flex items-center gap-2 text-[10px] font-medium text-slate-400 uppercase tracking-widest">
+                                        </div>
+
+                                        <div className="col-span-3">
+                                            <span className="text-xs text-slate-500 line-clamp-2">{project.description || "-"}</span>
+                                        </div>
+
+                                        <div className="col-span-1">
+                                            <div className="flex items-center gap-1 text-[10px] font-medium text-slate-400 uppercase tracking-widest">
                                                 <MapPin size={10} /> {project.location}
                                             </div>
-                                        </div>
-
-                                        <div className="col-span-2">
-                                            <span className="text-[10px] font-bold uppercase tracking-widest text-text-secondary/60 italic">{project.category}</span>
-                                        </div>
-
-                                        <div className="col-span-2">
-                                            <span className={`text-[9px] font-bold px-3 py-1 uppercase tracking-widest rounded-full ${project.status === "Tamamlandı" ? "bg-blue-50 text-blue-600 border border-blue-100" : "bg-orange-50 text-orange-600 border border-orange-100"}`}>
-                                                {project.status}
-                                            </span>
                                         </div>
 
                                         <div className="col-span-1">
                                             <span className="text-[10px] font-bold uppercase tracking-widest text-text-secondary/60">{project.year}</span>
                                         </div>
 
+                                        <div className="col-span-1">
+                                            <span className={`text-[9px] font-bold px-2 py-1 uppercase tracking-widest rounded-full ${project.status === "Tamamlandı" ? "bg-green-50 text-green-600" : "bg-yellow-50 text-yellow-600"}`}>
+                                                {project.status === "Tamamlandı" ? "Bitti" : "Devam"}
+                                            </span>
+                                        </div>
+
                                         <div className="col-span-2 flex items-center justify-end gap-2">
                                             <button
                                                 onClick={() => toggleFeatured(project)}
                                                 className={`size-10 flex items-center justify-center border transition-all rounded-lg ${project.is_featured
-                                                        ? "bg-yellow-500 border-yellow-500 text-white"
-                                                        : "border-border-brand text-slate-400 hover:text-yellow-500 hover:border-yellow-500/20"
+                                                    ? "bg-yellow-500 border-yellow-500 text-white"
+                                                    : "border-border-brand text-slate-400 hover:text-yellow-500 hover:border-yellow-500/20"
                                                     }`}
                                                 title={project.is_featured ? "Ana Sayfadan Kaldır" : "Ana Sayfaya Ekle"}
                                             >
