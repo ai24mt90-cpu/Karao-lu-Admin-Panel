@@ -142,6 +142,17 @@ export default function ProjectsAdminPage() {
                     </div>
 
                     <div className="flex gap-4 w-full md:w-auto">
+                        <a
+                            href="https://karaoglumuhendislik.com.tr/projeler"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-outline flex-1 md:flex-none"
+                        >
+                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            Siteyi Görüntüle
+                        </a>
                         <button className="btn-outline flex-1 md:flex-none">
                             <Filter size={14} className="mr-3" /> Filtrele
                         </button>
