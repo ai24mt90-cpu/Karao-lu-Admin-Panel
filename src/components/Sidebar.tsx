@@ -46,8 +46,8 @@ export default function Sidebar() {
                     <Image
                         src="/logomavi.svg"
                         alt="Karaoğlu Admin"
-                        width={160}
-                        height={55}
+                        width={100}
+                        height={100}
                         className="object-contain"
                         priority
                     />
