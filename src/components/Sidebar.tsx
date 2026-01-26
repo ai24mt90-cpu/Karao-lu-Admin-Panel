@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
     BarChart3,
@@ -41,9 +42,16 @@ export default function Sidebar() {
         <aside className="w-72 flex flex-col bg-white h-screen sticky top-0 border-r border-slate-200 z-20">
             <div className="flex flex-col h-full p-8 px-6">
                 {/* Brand - Professional Crystal */}
-                <div className="flex flex-col gap-1 mb-12 px-2">
-                    <span className="text-xl font-bold text-slate-700 tracking-tight">KARAOĞLU</span>
-                    <span className="text-[10px] font-semibold text-primary uppercase tracking-[0.15em]">Yönetim Paneli</span>
+                <div className="flex flex-col gap-4 mb-10 px-2 items-center">
+                    <Image
+                        src="/logomavi.svg"
+                        alt="Karaoğlu Admin"
+                        width={160}
+                        height={55}
+                        className="object-contain"
+                        priority
+                    />
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Yönetim Paneli</span>
                 </div>
 
                 {/* Navigation */}
