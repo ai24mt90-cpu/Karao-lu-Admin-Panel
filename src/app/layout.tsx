@@ -14,9 +14,9 @@ export const metadata: Metadata = {
   title: "Admin Panel | Karaoğlu Universal Mühendislik",
   description: "Yönetim Paneli",
   icons: {
-    icon: "/favicon-v2.png",
-    apple: "/favicon-v2.png",
-    shortcut: "/favicon-v2.png",
+    icon: "/brand-icon.png",
+    apple: "/brand-icon.png",
+    shortcut: "/brand-icon.png",
   },
 };
 
