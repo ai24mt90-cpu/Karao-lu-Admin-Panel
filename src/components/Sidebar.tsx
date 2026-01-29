@@ -44,10 +44,10 @@ export default function Sidebar() {
                 {/* Brand - Professional Crystal */}
                 <div className="flex flex-col gap-4 mb-10 px-2 items-center">
                     <Image
-                        src="/logomavi.svg"
+                        src="/logo-header.png"
                         alt="Karaoğlu Admin"
-                        width={100}
-                        height={100}
+                        width={150}
+                        height={150}
                         className="object-contain"
                         priority
                     />
