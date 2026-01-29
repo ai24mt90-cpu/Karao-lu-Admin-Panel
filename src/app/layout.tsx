@@ -13,6 +13,11 @@ const publicSans = Public_Sans({
 export const metadata: Metadata = {
   title: "Admin Panel | Karaoğlu Universal Mühendislik",
   description: "Yönetim Paneli",
+  icons: {
+    icon: "/favicon-new.png",
+    apple: "/favicon-new.png",
+    shortcut: "/favicon-new.png",
+  },
 };
 
 export default function RootLayout({
