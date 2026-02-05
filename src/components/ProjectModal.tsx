@@ -12,6 +12,7 @@ interface Project {
     location: string;
     year: string;
     status: string;
+    client?: string;
     image_url?: string;
     description?: string;
 }
@@ -33,6 +34,7 @@ export default function ProjectModal({ isOpen, onClose, onSave, editingProject }
         location: "",
         year: new Date().getFullYear().toString(),
         status: "Devam Ediyor",
+        client: "",
         description: ""
     });
     const [loading, setLoading] = useState(false);
@@ -47,6 +49,7 @@ export default function ProjectModal({ isOpen, onClose, onSave, editingProject }
                 location: "",
                 year: new Date().getFullYear().toString(),
                 status: "Devam Ediyor",
+                client: "",
                 description: ""
             });
         }
@@ -160,6 +163,18 @@ export default function ProjectModal({ isOpen, onClose, onSave, editingProject }
                                         onChange={(e) => setFormData({ ...formData, year: e.target.value })}
                                         className="input-field"
                                         placeholder="2024"
+                                    />
+                                </div>
+
+                                {/* Client/Employer */}
+                                <div className="flex flex-col gap-3 md:col-span-2">
+                                    <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-secondary">İş Veren Kurum</label>
+                                    <input
+                                        type="text"
+                                        value={formData.client || ""}
+                                        onChange={(e) => setFormData({ ...formData, client: e.target.value })}
+                                        className="input-field uppercase"
+                                        placeholder="ÖRN: VAN VALİLİĞİ, TOKİ, ÇEVRE VE ŞEHİRCİLİK BAKANLIĞI"
                                     />
                                 </div>
                             </div>
