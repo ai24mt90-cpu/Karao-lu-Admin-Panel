@@ -17,6 +17,7 @@ import ImageUpload from "@/components/ImageUpload";
 interface BlogPost {
     id?: string;
     title: string;
+    slug?: string;
     summary: string;
     content: string;
     author: string;
@@ -36,6 +37,7 @@ export default function BlogAdminPage() {
     const [editingItem, setEditingItem] = useState<BlogPost | null>(null);
     const [formData, setFormData] = useState<BlogPost>({
         title: "",
+        slug: "",
         summary: "",
         content: "",
         author: "",
@@ -67,6 +69,21 @@ export default function BlogAdminPage() {
     const handleSave = async () => {
         setSaving(true);
         const { id, ...data } = formData;
+
+        // Auto-generate slug from title if not provided
+        if (!data.slug && data.title) {
+            data.slug = data.title
+                .toLowerCase()
+                .replace(/ı/g, 'i')
+                .replace(/ğ/g, 'g')
+                .replace(/ü/g, 'u')
+                .replace(/ş/g, 's')
+                .replace(/ö/g, 'o')
+                .replace(/ç/g, 'c')
+                .replace(/İ/g, 'i')
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
 
         let error;
         if (editingItem?.id) {
@@ -112,7 +129,7 @@ export default function BlogAdminPage() {
             setFormData(item);
         } else {
             setEditingItem(null);
-            setFormData({ title: "", summary: "", content: "", author: "", category: "Mühendislik", read_time: "5 dk", image_url: "" });
+            setFormData({ title: "", slug: "", summary: "", content: "", author: "", category: "Mühendislik", read_time: "5 dk", image_url: "" });
         }
         setIsModalOpen(true);
     };
@@ -120,7 +137,7 @@ export default function BlogAdminPage() {
     const closeModal = () => {
         setIsModalOpen(false);
         setEditingItem(null);
-        setFormData({ title: "", summary: "", content: "", author: "", category: "Mühendislik", read_time: "5 dk", image_url: "" });
+        setFormData({ title: "", slug: "", summary: "", content: "", author: "", category: "Mühendislik", read_time: "5 dk", image_url: "" });
     };
 
     const filteredPosts = posts.filter(p =>
